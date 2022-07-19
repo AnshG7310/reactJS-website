@@ -507,16 +507,16 @@ footer .main-hero-para {
 
 .notfound .notfound-404 h1 {
   font-family: "Maven Pro", sans-serif;
-  color: #ececec;
+  color: #c5c5c5;
   font-weight: 900;
-  font-size: 276px;
+  font-size: 240px;
   margin: 0px;
   position: absolute;
   left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  top: 40%;
+  -webkit-transform: translate(-50%, -60%);
+  -ms-transform: translate(-50%, -60%);
+  transform: translate(-50%, -60%);
 }
 
 .notfound h2 {

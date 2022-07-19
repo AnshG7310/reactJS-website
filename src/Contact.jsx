@@ -1,6 +1,64 @@
 import React from 'react';
 
 const Contact = () => {
+
+  const [userData, setUserData] = React.useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    address: "",
+    message: "",
+  });
+
+  let name, value;
+  const postUserData = (event) => {
+    name = event.target.name;
+    value = event.target.value;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  // Connect With FireBase 
+  const submitData = async (e) => {
+    e.preventDefault();
+    const { firstName, lastName, phone, email, address, message } = userData;
+    if (firstName && lastName && phone && email && address && message) {
+      const response = await fetch(
+        "https://reactfirebasewebsite-224de-default-rtdb.firebaseio.com/userDataRecord.json",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            phone,
+            email,
+            address,
+            message,
+          })
+        }
+      );
+      if (response) {
+        setUserData({
+          firstName: "",
+          lastName: "",
+          phone: "",
+          email: "",
+          address: "",
+          message: "",
+        });
+        alert("Data Stored");
+      }
+    } else {
+      alert("Please Fill the Data");
+    }
+  }
+
   return (
     <>
       <section className="contactus-section">
@@ -27,42 +85,42 @@ const Contact = () => {
 
                     <div className="row">
                       <div className="col-12 col-lg-6 contact-input-field">
-                        <input type="text" placeholder='First Name' className="form-control" />
+                        <input type="text" name="firstName" value={userData.firstName} onChange={postUserData} placeholder='First Name' className="form-control" />
                       </div>
                       <div className="col-12 col-lg-6 contact-input-field">
-                        <input type="text" placeholder='Last Name' className="form-control" />
+                        <input type="text" name="lastName" value={userData.lastName} onChange={postUserData} placeholder='Last Name' className="form-control" />
                       </div>
                     </div>
 
                     <div className="row">
                       <div className="col-12 col-lg-6 contact-input-field">
-                        <input type="text" placeholder='Phone Number' className="form-control" />
+                        <input type="text" name="phone" value={userData.phone} onChange={postUserData} placeholder='Phone Number' className="form-control" />
                       </div>
                       <div className="col-12 col-lg-6 contact-input-field">
-                        <input type="text" placeholder='Email ID' className="form-control" />
+                        <input type="text" name="email" value={userData.email} onChange={postUserData} placeholder='Email ID' className="form-control" />
                       </div>
                     </div>
 
                     <div className="row">
                       <div className="col-12 contact-input-field">
-                        <input type="text" name="" id="" placeholder='Add Address' className="form-control" />
+                        <input type="text" name="address" id="" value={userData.address} onChange={postUserData} placeholder='Add Address' className="form-control" />
                       </div>
                     </div>
 
                     <div className="row">
                       <div className="col-12">
-                        <input type="text" name="" id="" placeholder='Enter Your Message' className="form-control" />
+                        <input type="text" name="message" id="" value={userData.message} onChange={postUserData} placeholder='Enter Your Message' className="form-control" />
                       </div>
                     </div>
 
                     <div className="form-check form-checkbox-style">
-                      <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+                      <input className="form-check-input" type="checkbox" value="userData.firstName" id="flexCheckChecked" />
                       <label className="form-check-label main-hero-para">
                         I agree that the Ansh Goyal may contact me at the Email Address or Phone Number above...
                       </label>
                     </div>
 
-                    <button type="submit" className="btn btn-style w-100 mt-5">
+                    <button type="submit" className="btn btn-style w-100 mt-5" onClick={submitData}>
                       Submit
                     </button>
 
